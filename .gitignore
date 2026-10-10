@@ -1,0 +1,10 @@
+node_modules/
+expenses.db
+*.db-shm
+*.db-wal
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+coverage/
