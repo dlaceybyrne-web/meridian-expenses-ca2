@@ -65,12 +65,24 @@ app.post('/login', (req, res) => {
 
 app.get('/logout', (req, res) => { res.clearCookie('token'); res.redirect('/login'); });
 
+
 app.get('/claim/:id', (req, res) => {
-  const row = db.prepare('SELECT * FROM claims WHERE id = ?').get(req.params.id);
-  if (!row) return res.status(404).send('Not found');
+  const u = currentUser(req);
+
+  if (!u) {
+    return res.redirect('/login');
+  }
+
+  const row = db.prepare(
+    'SELECT * FROM claims WHERE id = ? AND user_id = ?'
+  ).get(req.params.id, u.uid);
+
+  if (!row) {
+    return res.status(404).send('Not found');
+  }
+
   res.render('claim', { c: row });
 });
-
 app.post('/claim/new', (req, res) => {
   const u = currentUser(req);
   db.prepare(`INSERT INTO claims (user_id, merchant, amount, note, status)
@@ -97,11 +109,24 @@ app.post('/profile', (req, res) => {
   res.redirect('/');
 });
 
+
 app.get('/admin/users', (req, res) => {
-  const rows = db.prepare('SELECT id, username, name, role FROM users').all();
+  const u = currentUser(req);
+
+  if (!u) {
+    return res.redirect('/login');
+  }
+
+  if (u.role !== 'admin') {
+    return res.status(403).send('Forbidden');
+  }
+
+  const rows = db.prepare(
+    'SELECT id, username, name, role FROM users'
+  ).all();
+
   res.render('admin', { users: rows });
 });
-
 app.get('/go', (req, res) => res.redirect(req.query.next || '/'));
 
 app.get('/debug/config', (req, res) =>
