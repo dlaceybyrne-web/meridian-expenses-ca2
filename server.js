@@ -12,7 +12,6 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const { exec } = require('child_process');
 const path = require('path');
 const Database = require('better-sqlite3');
 
@@ -96,12 +95,23 @@ app.get('/receipt', (req, res) => {
 });
 
 app.get('/export', (req, res) => {
-  const month = req.query.month || '2026-09';
-  const out = `/tmp/expenses-${month}.csv`;
-  exec(`sqlite3 ${path.join(__dirname, 'expenses.db')} '.mode csv' '.once ${out}' 'SELECT * FROM claims'`,
-    () => res.download(out));
-});
+  const rows = db.prepare('SELECT * FROM claims').all();
+  const columns = rows.length ? Object.keys(rows[0]) : [];
 
+  const escapeCsv = (value) => {
+    const text = value == null ? '' : String(value);
+    return `"${text.replace(/"/g, '""')}"`;
+  };
+
+  const csv = [
+    columns.map(escapeCsv).join(','),
+    ...rows.map((row) =>
+      columns.map((column) => escapeCsv(row[column])).join(',')
+    )
+  ].join('\r\n');
+
+  res.type('text/csv').attachment('expenses.csv').send(csv);
+});
 app.post('/profile', (req, res) => {
   const u = currentUser(req);
   const fields = Object.keys(req.body).map((k) => `${k} = '${req.body[k]}'`).join(', ');
