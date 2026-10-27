@@ -69,8 +69,8 @@ app.get('/claim/:id', (req, res) => {
   if (!u) return res.redirect('/login');
 
   const row = db.prepare(
-    'SELECT * FROM claims WHERE id = ? AND user_id = ?'
-  ).get(req.params.id, u.uid);
+    'SELECT * FROM claims WHERE id = ?'
+  ).get(req.params.id);
 
   if (!row) return res.status(404).send('Not found');
 
