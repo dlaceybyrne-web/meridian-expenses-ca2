@@ -64,21 +64,15 @@ app.post('/login', (req, res) => {
 
 app.get('/logout', (req, res) => { res.clearCookie('token'); res.redirect('/login'); });
 
-
 app.get('/claim/:id', (req, res) => {
   const u = currentUser(req);
-
-  if (!u) {
-    return res.redirect('/login');
-  }
+  if (!u) return res.redirect('/login');
 
   const row = db.prepare(
     'SELECT * FROM claims WHERE id = ? AND user_id = ?'
   ).get(req.params.id, u.uid);
 
-  if (!row) {
-    return res.status(404).send('Not found');
-  }
+  if (!row) return res.status(404).send('Not found');
 
   res.render('claim', { c: row });
 });
@@ -119,17 +113,11 @@ app.post('/profile', (req, res) => {
   res.redirect('/');
 });
 
-
 app.get('/admin/users', (req, res) => {
   const u = currentUser(req);
 
-  if (!u) {
-    return res.redirect('/login');
-  }
-
-  if (u.role !== 'admin') {
-    return res.status(403).send('Forbidden');
-  }
+  if (!u) return res.redirect('/login');
+  if (u.role !== 'admin') return res.status(403).send('Forbidden');
 
   const rows = db.prepare(
     'SELECT id, username, name, role FROM users'
