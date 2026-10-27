@@ -69,8 +69,8 @@ app.get('/claim/:id', (req, res) => {
   if (!u) return res.redirect('/login');
 
   const row = db.prepare(
-    'SELECT * FROM claims WHERE id = ?'
-  ).get(req.params.id);
+    'SELECT * FROM claims WHERE id = ? AND user_id = ?'
+  ).get(req.params.id, u.uid);
 
   if (!row) return res.status(404).send('Not found');
 
@@ -132,3 +132,4 @@ app.get('/debug/config', (req, res) =>
 
 app.listen(3000, '127.0.0.1', () =>
   console.log('Meridian Expenses (vulnerable) on http://127.0.0.1:3000'));
+
