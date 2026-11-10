@@ -46,7 +46,3 @@ The official assessment brief takes priority over this README.
 ## Testing restrictions
 
 All security testing must be carried out on this application, on my own machine and through localhost only. No testing of CCT systems or third-party services is permitted.
-
-## AI use
-
-Any AI assistance used during the assessment must be declared in the compulsory AI Fluency table, as required by the assessment brief.
