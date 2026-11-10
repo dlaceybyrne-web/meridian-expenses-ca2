@@ -1,18 +1,25 @@
-# Meridian Expenses – Node.js / Express
+# Meridian Expenses – CA2 Security Testing Pipeline
 
-This project was provided for the CCT PGDip Cybersecurity programme (September 2026 intake), as part of Secure Programming and Scripting CA1 (40%).
+## About this project
 
-## Important: Deliberately vulnerable application
+This repository contains my work for Secure Programming and Scripting CA2 as part of the CCT College Dublin PGDip in Cybersecurity.
 
-Meridian Expenses is a teaching application containing intentional security vulnerabilities. It is for local testing only and must not be deployed or exposed to a public network.
+I used the Meridian Expenses Node.js and Express application to build and test an automated security testing pipeline. The application was originally provided as a deliberately vulnerable teaching project.
 
-The application runs on `127.0.0.1` and uses fictional data. No real personal or financial information is included.
+## What I implemented
 
-## About the application
+For CA2, I configured a GitHub Actions workflow to run security checks automatically.
 
-Meridian Expenses is a basic staff expenses system. Users can log in, submit expense claims, view claims and download receipts. It includes staff, finance and administrator roles.
+The pipeline includes:
 
-## Running the application
+- **Semgrep** to check the code for potential security issues.
+- **npm audit** to identify vulnerable dependencies.
+- **Gitleaks** to check for exposed secrets.
+- **Custom security tests** to check access controls for expense claims and administrator functions.
+
+I also tested how the pipeline responded to an intentional authorisation vulnerability. The failed and successful workflow runs are included as evidence.
+
+## Running the application locally
 
 ```bash
 npm install
@@ -20,29 +27,20 @@ npm run seed
 npm start
 ```
 
-Open `http://127.0.0.1:3000` in your browser.
+The application runs at `http://127.0.0.1:3000`.
 
-The seed command creates the sample database and receipts.
+## Important security notice
 
-## Test accounts
+Meridian Expenses is a deliberately vulnerable teaching application. It must only be run and tested locally. It should not be deployed to a public server or used with real personal or financial information.
 
-| Username | Password | Role |
-|---|---|---|
-| `jdoe` | `password1` | Staff |
-| `rsmith` | `letmein` | Staff |
-| `achen` | `Summer2026` | Finance |
-| `admin` | `admin` | Administrator |
+All sample data is fictional.
 
-These passwords are intentionally weak for testing purposes.
+## Evidence
 
-## Assessment requirements
+The repository includes the GitHub Actions workflow, security tests and supporting evidence used in my CA2 report.
 
-The CA1 task is to identify at least six different security vulnerabilities, demonstrate how each can be exploited, explain the risks and apply suitable fixes.
+The report explains the pipeline, test results, limitations and how automated security testing can support software assurance.
 
-Each finding should include practical evidence, such as a test request, response or screenshot. Similar issues caused by the same underlying weakness should not be counted as separate vulnerabilities.
+## AI declaration
 
-The official assessment brief takes priority over this README.
-
-## Testing restrictions
-
-All security testing must be carried out on this application, on my own machine and through localhost only. No testing of CCT systems or third-party services is permitted.
+I have documented my use of AI assistance in the AI Fluency declaration included in my CA2 report.
