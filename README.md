@@ -1,61 +1,52 @@
-# Meridian Expenses — Node.js / Express
+# Meridian Expenses – Node.js / Express
 
-Issued for **CCT PGDip Cybersecurity (Sep 2026 intake)**, Secure Programming and Scripting, **CA1 (40%)**.
+This project was provided for the CCT PGDip Cybersecurity programme (September 2026 intake), as part of Secure Programming and Scripting CA1 (40%).
 
-> ## ⚠️ This application is deliberately insecure
-> It is a teaching artefact. It contains multiple serious, exploitable security
-> defects **on purpose**. Do not deploy it, do not put it on a public network,
-> and do not reuse any of this code in real work.
->
-> It binds to **127.0.0.1 only**. Keep it that way.
->
-> All data in it is fabricated. No real person, account or payment appears here.
+## Important: Deliberately vulnerable application
 
-## What it is
+Meridian Expenses is a teaching application containing intentional security vulnerabilities. It is for local testing only and must not be deployed or exposed to a public network.
 
-A small staff expense-claim portal: staff sign in, submit claims, view their own
-claims and download receipts. Finance and admin roles exist. It is about the size
-of a real internal tool that nobody security-reviewed.
+The application runs on `127.0.0.1` and uses fictional data. No real personal or financial information is included.
 
-## Running it
+## About the application
 
-```
+Meridian Expenses is a basic staff expenses system. Users can log in, submit expense claims, view claims and download receipts. It includes staff, finance and administrator roles.
+
+## Running the application
+
+```bash
 npm install
-npm run seed            # creates expenses.db and sample receipts
-npm start               # http://127.0.0.1:3000
+npm run seed
+npm start
 ```
 
-Sample accounts (the passwords are weak on purpose):
+Open `http://127.0.0.1:3000` in your browser.
+
+The seed command creates the sample database and receipts.
+
+## Test accounts
 
 | Username | Password | Role |
 |---|---|---|
-| `jdoe` | `password1` | staff |
-| `rsmith` | `letmein` | staff |
-| `achen` | `Summer2026` | finance |
-| `admin` | `admin` | admin |
+| `jdoe` | `password1` | Staff |
+| `rsmith` | `letmein` | Staff |
+| `achen` | `Summer2026` | Finance |
+| `admin` | `admin` | Administrator |
 
-## Your task
+These passwords are intentionally weak for testing purposes.
 
-The brief is the authority — this file only tells you how to run the thing. In
-summary you must identify **at least six distinct security vulnerabilities**,
-demonstrate each one, classify it, assess its impact, and fix it.
+## Assessment requirements
 
-Two things students routinely lose marks on:
+The CA1 task is to identify at least six different security vulnerabilities, demonstrate how each can be exploited, explain the risks and apply suitable fixes.
 
-- **Six distinct vulnerabilities, not six instances of one.** Three injectable
-  parameters in the same query pattern is one vulnerability found three times.
-- **A proof-of-concept is required.** "This looks vulnerable to X" scores far
-  below a request, a response and a screenshot showing X actually happening.
+Each finding should include practical evidence, such as a test request, response or screenshot. Similar issues caused by the same underlying weakness should not be counted as separate vulnerabilities.
 
-## Rules of engagement
+The official assessment brief takes priority over this README.
 
-Test **only** this application, **only** on your own machine, **only** on
-localhost. Nothing here authorises you to test any CCT system, any third-party
-site, or anything else. Doing so is a disciplinary matter and, under the Criminal
-Justice (Offences Relating to Information Systems) Act 2017, potentially a
-criminal one.
+## Testing restrictions
 
-## Declaring AI use
+All security testing must be carried out on this application, on my own machine and through localhost only. No testing of CCT systems or third-party services is permitted.
 
-The AI Fluency declaration table in the brief is compulsory. Using a tool to help
-find or explain a vulnerability is permitted; not declaring it is not.
+## AI use
+
+Any AI assistance used during the assessment must be declared in the compulsory AI Fluency table, as required by the assessment brief.
